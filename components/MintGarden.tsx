@@ -4,7 +4,7 @@ import { parseEther } from 'viem'
 import {useState} from 'react';
 import { Tooltip } from "react-tooltip";
 import styles from '../styles/MintGarden.module.css';
-import gardenContract from '../hardhat/artifacts/contracts/GardenExplorer.sol/GardenExplorer.json'
+import gardenContract from '../src/lib/GardenExplorer.json';
 import Notification, { NotificationType } from '../components/Notification';
 
 const MintGarden = () => {
