@@ -3,7 +3,7 @@ import { useAccount, useReadContract,  }from 'wagmi';
 import styles from '../styles/UserSpace.module.css';
 import MintGarden from "../components/MintGarden";
 import GardenMedia from "../src/images/GardenNFT.svg";
-import gardenContract from '../hardhat/artifacts/contracts/GardenExplorer.sol/GardenExplorer.json'
+import gardenContract from '../src/lib/GardenExplorer.json';
 import { useEffect } from 'react';
 import Footer from '../components/Footer';
 import { Tooltip } from 'react-tooltip';
