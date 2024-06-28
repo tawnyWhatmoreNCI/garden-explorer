@@ -1,0 +1,41 @@
+.row { 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+}
+
+.gardenMedia {
+    animation: floating 3s infinite ease-in-out;
+    border-radius: 50px;
+    background: var(--fadedGreen);
+    margin: 2rem auto;
+    width: 300px;
+    height: 300px;
+}
+
+.gardenMedia svg {
+    border-radius: 50px;
+}
+
+.gardenMedia.hint {
+    opacity: 0.8;
+}
+.gardenMedia.hint svg { 
+    opacity: 0.3;
+    filter: blur(3px);
+}
+
+
+@keyframes floating {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}

@@ -1,0 +1,47 @@
+
+.main {
+  min-height: 100vh;
+  padding: 2rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  line-height: 1;
+  font-size: 2.5rem;
+}
+
+.subtitle {
+  margin: 0 0 2rem;
+  line-height: 0.7;
+  font-size: 1.5rem;
+}
+
+.fadeInTitle {
+  opacity: 0;
+  animation: fadeInDelay 2.5s forwards;
+}
+
+@keyframes fadeInDelay {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}

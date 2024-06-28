@@ -1,0 +1,41 @@
+.navContainer {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navContainer nav {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.mainNav {
+    text-align:center;
+    background: var(--darkGreen);
+    padding: 15px 10px;
+    border-radius: 50px;
+}
+
+.mainNav a {
+    padding: 10px 15px;
+    margin: 0 15px;
+    color: var(--cream );
+    border-radius: 70px;
+}
+
+.mainNav a:hover {
+    background-color: var(--midGreen);
+    opacity: 0.8
+}
+
+.active { 
+    font-weight: bold;
+    background: var(--midGreen);
+}
+
+.logo, .emptyLogo {
+    width: 65px;
+    height: 65px;
+}

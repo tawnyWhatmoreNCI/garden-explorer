@@ -1,0 +1,47 @@
+.notification {
+    position: relative;
+    bottom: 10px;
+    right: 10px;
+    left:10px;
+    max-width: 100%;
+    z-index: 100;
+    margin: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    border: 1px solid;
+    color: var(--info);
+    background: rgba(255,255,255,0.1);
+}
+
+.notification.info {
+    color: var(--info);
+    border-color: var(--info);
+}
+
+.notification.error {
+    color: var(--error);
+    border-color: var(--error);
+}
+
+.notification.warning {
+    color: var(--warning);
+    border-color: var(--warning);
+}
+
+.notification.success {
+    color: var(--success);
+    border-color: var(--success);
+}
+
+.closeButton {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 1rem;
+    padding: 0.5rem;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    transition: 0.3s;
+}

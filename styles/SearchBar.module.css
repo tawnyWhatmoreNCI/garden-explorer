@@ -1,0 +1,12 @@
+.searchRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+
+}
+
+.searchSubmit {
+    margin-left: 10px;
+}

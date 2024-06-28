@@ -1,0 +1,15 @@
+.mintRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 0 1rem 0;
+}
+
+.mintRow button {
+    margin: 10px;
+
+}
+.mintRow input[type=text]:disabled { 
+    opacity: var(--disabledOpacity);
+    cursor: not-allowed;
+}

@@ -1,0 +1,37 @@
+
+@keyframes gradientAnimation {
+    0% { border-color: var(--brightGreen); color: var(--brightGreen); }
+    33.33% { border-color: var(--midGreen); color: var(--midGreen); }
+    66.66% { border-color: var(--cream); color: var(--cream); }
+    100% { border-color: var(--brightGreen); color: var(--brightGreen); }
+}
+  
+
+
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    width: 100%;
+  }
+  
+  .row h2 {
+    margin: 1rem;
+    padding: 1.5rem;
+    animation: gradientAnimation 4s infinite;
+    border-width: 1px;
+    border-style: solid;
+    border-radius:20px;
+    backdrop-filter: blur(3px);
+    color: inherit;
+  }
+  
+  .row .divider {
+    width: 40px;
+    height: 1px;
+    animation: gradientAnimation 4s infinite;
+    border: 0.5px solid;
+    margin: 1rem 0;
+  }
