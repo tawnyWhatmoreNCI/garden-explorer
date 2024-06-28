@@ -46,6 +46,7 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             {isPending ? 'Confirming...' : 'Mint'}
           </button>
           </div>
+          <small>Contract: {process.env.NEXT_PUBLIC_CONTRACT_GARDEN_EXPLORER}</small>
         {hash && <Notification message={`Transaction Hash: ${hash}`} type={NotificationType.INFO} />}
         {isConfirming && <Notification message={"Waiting for confirmation"} type={NotificationType.INFO} />}
         {isConfirmed && <Notification message={"Transaction Confirmed"} type={NotificationType.SUCCESS} />}

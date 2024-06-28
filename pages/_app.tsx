@@ -5,17 +5,17 @@ import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 import {
-  hardhat,
+  hardhat, sepolia
 } from 'wagmi/chains';
 import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import Navbar from '../components/Navbar';
 import styles from '../styles/Home.module.css';
 
 const wagmiConfig = getDefaultConfig({
-  appName: 'RainbowKit App',
-  projectId: 'YOUR_PROJECT_ID',
+  appName: 'Garden Explorer',
+  projectId: 'org.gardenEeplorer',
   chains: [
-    hardhat],
+    hardhat, sepolia],
   ssr: true,
 });
 
