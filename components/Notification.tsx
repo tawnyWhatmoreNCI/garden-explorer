@@ -16,9 +16,8 @@ const Notification = ({ message, type }: { message: string, type: NotificationTy
     if (!isVisible) {
         return null;
     }
-
+    {/*Example of TSX in a React component*/}   
     return (
-        
         <div className={`${styles.notification} ${styles[type]}`}>
             {message}
             <button className={styles.closeButton} onClick={handleClose}>X</button>

@@ -1,6 +1,5 @@
 import hre, { ethers } from "hardhat";
 import { expect } from "chai";
-import { GardenExplorer } from "../typechain-types";
 
 describe("GardenExplorer", function () {
     // set up the contract and the accounts before each test
