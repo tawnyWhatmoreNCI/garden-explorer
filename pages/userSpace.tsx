@@ -41,7 +41,13 @@ function MintGardenLayout({ isConnected }: { isConnected: boolean }) {
                 </p>
            )}
             <div className={`${styles.gardenMedia}  ${!isConnected ? styles.hint : ""}`} >
-            <GardenMedia />
+            {!isConnected && (
+            <Tooltip
+            id="mint-tooltip"
+            place="top"
+            content={"Connect your wallet to mint this NFT."}/>
+            )}
+            <GardenMedia data-tooltip-id="mint-tooltip"  />
             </div>
 
             <MintGarden />

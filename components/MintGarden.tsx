@@ -71,7 +71,7 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         <Tooltip
         id="button-tooltip"
         place="top"
-        content={"You must connect a wallet to mint."}/>
+        content={"Connect your wallet to mint this NFT."}/>
         )}
 
         <Tooltip
