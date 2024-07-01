@@ -18,10 +18,9 @@ contract GardenExplorer is ERC721, Ownable {
     function _baseURI() internal pure override returns (string memory) {
         return "ipfs://QmZ6G4H4wjfx8gqEW6DwP6Ax1pfBCEUGGqheMwBic58EMj/gardenMetadata.json?nftId=";
     }
-    
+
     function _transfer(from, to, tokenId) internal override {
         revert("Transfers are disabled");
-        super._transfer(from, to, tokenId);
     }
 
     function safeMint() public payable {
