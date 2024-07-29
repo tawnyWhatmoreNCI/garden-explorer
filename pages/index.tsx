@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css';
 import AnimatedLogo from '../components/AnimatedLogo';
 import StatementPoints from '../components/StatementPoints';
 import Footer from '../components/Footer';
+import UploadObservation from '../components/UploadObservation';
 
 const About: NextPage = () => {
   return (
@@ -15,11 +16,8 @@ const About: NextPage = () => {
           name="Garden Explorer"
         />
         <link href="/favicon.ico" rel="icon" />
-        {/*locally hosted font*/}
-        <link href="../src/fonts/Magica.otf" rel="stylesheet" />
-        {/*google hosted font*/}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" />
+        <link rel="stylesheet" href="/src/fonts/Magica.otf" />
       </Head>
 
       <main className={styles.main}>
@@ -28,6 +26,7 @@ const About: NextPage = () => {
         <AnimatedLogo/>
 
         <div className={styles.container}>
+          <UploadObservation />
       <StatementPoints/>
         <div className={styles.content}>
           <h3>The Roots</h3>
@@ -37,14 +36,15 @@ const About: NextPage = () => {
           </p>
           <p>
             Get a little closer to nature. Explore, discover. There is magic in the world and we have evolved to become blind to it. Lets reaquaint ourselves with the spells to unlock it. 
-            <ol>
+           </p>
+           <ol>
               <li><b>Spend time outdoors.</b> Leisurely walks, gardening or simply sitting on an outdoor bench is your first step.</li>
               <li><b>Slow down.</b> Pace yourself when out for a walk. Focus on the sights, sounds and smells around you.</li>
               <li><b>Engage your sense.</b> Listen to the bird song, the rustling wind or running water. Feel the textures of leaves, bark, soil. Observe colours, patterns and movements.</li>
               <li><b>Learn.</b> Open yourself up to understanding the natural world, and you will immediately increase your appreciation. Take time to identify species be it animal or plant.</li>
             </ol>
             <p>Learning is where Garden Explorer can help.</p>
-            </p>
+            
             <p>
               By using your observational contributions and the power of blockchain technologies, Garden Explorer can build a community of enthusiastic naturalists that come together to create a public, immutable dataset of our findings from the natural world. 
             </p>

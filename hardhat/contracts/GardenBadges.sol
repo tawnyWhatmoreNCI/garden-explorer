@@ -6,6 +6,8 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract GardenExplorerBadges is ERC1155, Ownable {
+    //max badge id - used for validation
+    uint256 public constant MAX_BADGE_ID = 5;
 
     //oBadge collection - for Observations 
    //Badges for observations made
@@ -33,6 +35,12 @@ contract GardenExplorerBadges is ERC1155, Ownable {
         _mint(initialOwner, OBADGE_SHARP_EYED, 10**5, "");
         _mint(initialOwner, OBADGE_SEASON_SPOTTER, 10**5, "");
         _mint(initialOwner, OBADGE_EXPERIENCED_TRACKER, 10**5, "");
+    }
+
+    //mint more badges to the owner - could. do this if supply theoritically became low.
+    function mint(uint256 id, uint256 amount, bytes memory data) public onlyOwner {
+        require(id <= OBADGE_MASTER_OBSERVER, "GardenExplorerBadges: Invalid badge id");
+        _mint(owner(), id, amount, data);
     }
 
 }
