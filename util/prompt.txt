@@ -1,0 +1,24 @@
+Given an image, identify the species of plant or animal present in the image and populate the following JSON object with the appropriate details. 
+If the image does not contain a plant, animal, or fungi, return an error JSON object with a meaningful message.
+The confidence level of the identification as a value out of 5 that represents how sure you are of your answer.
+
+JSON Object Template:
+{
+    "common_name": "{Generate}",
+    "scientific_name": "{Generate}",
+    "kingdom": "{Generate}",
+    "phylum": "{Generate}",
+    "class": "{Generate}",
+    "order": "{Generate}",
+    "family": "{Generate}",
+    "genus": "{Generate}",
+    "species": "{Generate}",
+    "description": "{Generate}",
+    "id_confidence_level": "{Generate}"
+}
+
+Error JSON Template:
+{
+    "error": "The image does not contain a recognizable plant, animal, or fungi."
+}
+

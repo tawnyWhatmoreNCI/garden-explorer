@@ -1,29 +1,35 @@
 {
-  "name": "A Garden Explorer Observation",
-  "description": "Garden Explorer is blah",
-  "image": "imageURL",
-  "nftId": 0,
-  "observer": "minterAddress",
-  "identifications": [
-    {
-      "identifier": "identifierAddress or AI",
-      "common_name": "AI to Generate",
-      "description": "AI to Generate",
-      "scientific_name": "AI to Generate",
-      "type": "AI to Generate",
-      "species": "AI to Generate",
-      "notes": "AI to Generate",
-      "submitted_at": "date",
-      "id_confidence_level": "AI to Generate",
-      "id_community_rating": {
-        "current_rating": "averageValue",
-        "ratings": [{
-          "rating": "ratingValue",
-          "rater": "raterAddress",
-          "comment": "comment",
-          "submitted_at": "date"
-        }]
-      }
-    }
-  ]
+    "name": "A Garden Explorer Observation",
+    "description": "Garden Explorer is blah",
+    "image": "imageURL",
+    "nftId": 0,
+    "observer": "minterAddress",
+    "identifications": [
+        {
+            "identifier": "AI",
+            "common_name": "{Generate}",
+            "scientific_name": "{Generate}",
+            "kingdom": "{Generate}",
+            "phylum": "{Generate}",
+            "class": "{Generate}",
+            "order": "{Generate}",
+            "family": "{Generate}",
+            "genus": "{Generate}",
+            "species": "{Generate}",
+            "description": "{Generate}",
+            "id_confidence_level": "{Generate}",
+            "submitted_at": "date",
+            "id_community_rating": {
+                "current_rating": "averageValue",
+                "ratings": [
+                    {
+                        "rating": "ratingValue",
+                        "rater": "raterAddress",
+                        "comment": "comment",
+                        "submitted_at": "date"
+                    }
+                ]
+            }
+        }
+    ]
 }

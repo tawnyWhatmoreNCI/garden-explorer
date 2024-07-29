@@ -8,19 +8,17 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract GardenExplorer is ERC721, Ownable {
     uint256 private _nextTokenId;
      uint256 public mintPrice = 0.05 ether;
+     string private baseURI;
 
-    constructor(address initialOwner)
+    constructor(address initialOwner, string memory initialBaseURI)
         ERC721("Garden Explorer", "EXPLORE")
         Ownable(initialOwner)
     {
+        baseURI = initialBaseURI;
     }
 
-    function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://QmZ6G4H4wjfx8gqEW6DwP6Ax1pfBCEUGGqheMwBic58EMj/gardenMetadata.json?nftId=";
-    }
-
-    function _transfer(from, to, tokenId) internal override {
-        revert("Transfers are disabled");
+    function _baseURI() internal view override returns (string memory) {
+        return baseURI;
     }
 
     function safeMint() public payable {
@@ -31,4 +29,10 @@ contract GardenExplorer is ERC721, Ownable {
         uint256 tokenId = _nextTokenId++;
         _safeMint(msg.sender, tokenId);
     }
+
+    function updateBaseUri(string memory newBaseURI) public onlyOwner { 
+        baseURI = newBaseURI;
+    }
+
+     //TODO: Disable transfers
 }

@@ -7,11 +7,10 @@ import gardenContract from '../src/lib/GardenExplorer.json';
 import { useEffect } from 'react';
 import Footer from '../components/Footer';
 import { Tooltip } from 'react-tooltip';
+import  useObservationTokens  from './hooks/useObservationToken';
 
 function UploadBar() {
-
     return (
-        
         <div className="container">
         <div className={styles.row}>
             <button className="actionButton" data-tooltip-id="upload-tooltip" disabled>Upload Observation</button>
@@ -19,11 +18,10 @@ function UploadBar() {
             <Tooltip id="upload-tooltip" place="top" content="This feature is not yet available."/>
             <p>Address: {process.env.NEXT_PUBLIC_CONTRACT_GARDEN_EXPLORER}</p>
         </div>
-        <p className="searchResults"> 
+        <p>
             You have 0 observations in your garden collection.
         </p>
         </div>
-
     )
 }
 
@@ -68,6 +66,7 @@ const UserSpace: NextPage = () => {
         functionName: 'balanceOf',
         args: [address]
       })
+      const { tokens, error: tokensError, isLoading: tokensLoading } = useObservationTokens(address);
 
       useEffect(() => {
         console.log(`contract address: ${process.env.NEXT_PUBLIC_CONTRACT_GARDEN_EXPLORER}`)
@@ -82,20 +81,40 @@ const UserSpace: NextPage = () => {
           if(balance) {
             console.log(`Balance: ${balance}`)
           }
-      })
-    return (
-        <div className="container">
-            {isConnected && balance ? 
-            <div>
-                <UploadBar />
-            </div> 
-            : 
-            <MintGardenLayout isConnected={isConnected}/>
-            }
-            <Footer/>
-        </div>
-    )
 
-}
+          if (tokensError) {
+            console.log(`Error getting tokens: ${tokensError}`);
+        }
+
+        if (tokens) {
+            console.log(`Tokens: ${tokens}`);
+        }
+      })
+
+      return (
+        <div className="container">
+            {isConnected && balance ? (
+                <div>
+                    <UploadBar />
+                    {tokensLoading ? (
+                        <p>Loading tokens...</p>
+                    ) : (
+                        <div>
+                            <h2>Your Observation Tokens</h2>
+                            <ul>
+                                {tokens.map((tokenId: number) => (
+                                    <li key={tokenId}>Token ID: {tokenId}</li>   
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <MintGardenLayout isConnected={isConnected} />
+            )}
+            <Footer />
+        </div>
+    );
+};
 
 export default UserSpace
