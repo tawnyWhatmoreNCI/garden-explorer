@@ -30,7 +30,7 @@ const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_GARDEN_EXPLORER as `0x$
             address: contractAddress,
             abi: gardenContract.abi,
             functionName: 'safeMint',
-            value: parseEther('0.05') 
+            value: parseEther(inputAmount.toString() ?? mintPrice) 
           })
     } else {
         console.error(`Account not connected, ${address}`)
@@ -42,16 +42,16 @@ const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_GARDEN_EXPLORER as `0x$
       hash, 
     })
 
-const [inputName, setInputName] = useState<string>("")
+const [inputAmount, setInputAmount] = useState<number>(0.1)
 
 const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputName(event.target.value) 
+    setInputAmount(parseFloat(event.target.value)) 
 }
 
   return (
     <div>
       <div className={styles.mintRow}>
-        <input disabled data-tooltip-id="input-tooltip" type="text" className="inputBar" value={inputName ?? ""} placeholder="(Optional) Enter your garden name" onChange={handleChange} />
+        <input disabled data-tooltip-id="input-tooltip" type="number" className="inputBar" value={inputAmount ?? ""} min={mintPrice as number} placeholder="Enter mint price" onChange={handleChange} />
           <button data-tooltip-id="button-tooltip"  className="actionButton" disabled={isPending || !isConnected} onClick={mint}>
             {isPending ? 'Confirming...' : 'Mint'}
           </button>
