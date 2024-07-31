@@ -66,9 +66,11 @@ contract GardenExplorerBadges is ERC1155, Ownable {
      * @param badgeId id of the badge to award
      * 
      */
-    function awardBadge(address to, uint256 badgeId) public {
+    function awardBadge(address to, uint256 badgeId) external {
         require(hasBadge(to, badgeId) == false, "Badge already awarded");
-        safeTransferFrom(owner(), to, badgeId, 1, "");
+        //using internal _safeTransferFrom as safeTransformFrom which is the public function and requires that msg.sender has permission to transfer these tokens
+        //The internal _safeTransferFrom function transfers without checking that msg.sender has permissions, ideal as the observation contract is transferring the tokens on behalf of the sender.
+        _safeTransferFrom(address(this), to, badgeId, 1, "");
     }
 
     /**
@@ -79,7 +81,7 @@ contract GardenExplorerBadges is ERC1155, Ownable {
      * @param name  name of the badge, stored to mapping
      */
     function addNewBadge( uint256 supply, string memory name) public onlyOwner {
-        _mint(msg.sender, NEXT_BADGE_ID, supply, "");
+        _mint(address(this), NEXT_BADGE_ID, supply, "");
         badgeNames[NEXT_BADGE_ID] = name;
         NEXT_BADGE_ID++;
     }
@@ -87,7 +89,6 @@ contract GardenExplorerBadges is ERC1155, Ownable {
     /**
      * 
      * @notice Owner/Admin function
-     * 
      * @param badgeId id of the badge to update
      * @param newName new name of the badge
      */
@@ -105,4 +106,5 @@ contract GardenExplorerBadges is ERC1155, Ownable {
     function updateSupply(uint256 badgeId, uint256 newSupply) public onlyOwner {
         _mint(msg.sender, badgeId, newSupply, "");
     }
+
 }

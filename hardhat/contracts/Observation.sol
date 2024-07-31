@@ -76,8 +76,10 @@ contract Observation is ERC721, ERC721Enumerable, Ownable {
     function safeMint(address mintTo, bytes32 metadataChecksum) public {
         //make sure user has a garden
         require(gardenExplorerContract.balanceOf(mintTo) > 0, "You must own a Garden Explorer token to mint an observation");
+       //ensure this contract has permission to transfer badges on behalf of the minter
+
         _safeMint(mintTo, _nextTokenId);
-        updateChecksum(_nextTokenId, metadataChecksum);
+        checksums[_nextTokenId] = metadataChecksum;
          checkBadgeMilestone(mintTo);
         _nextTokenId++;
     }
