@@ -15,6 +15,7 @@ export async function POST(request: Request) {
 
     //get tokenid from the request
     const requestBody = await request.json()
+    //get metadata from the request
     const metadata = requestBody.metadata
     const tokenId = metadata.tokenId
 
@@ -53,7 +54,7 @@ export async function POST(request: Request) {
         const blobClient = containerClient.getBlockBlobClient(blobName)
 
         //upload the request body json to blob
-        const jsonBytes = Buffer.from(JSON.stringify(requestBody))
+        const jsonBytes = Buffer.from(JSON.stringify(metadata))
         await blobClient.uploadData(jsonBytes)
 
         //hash the bytes

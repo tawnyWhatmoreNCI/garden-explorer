@@ -64,9 +64,6 @@ import { expect } from 'chai'
     it('should mint an observation', async function () {
         const { observation, badges, gardenExplorer, owner, otherAccount } =
             await deployGardenExplorerBadges()
-
-            
-            
             const observationAddress = await observation.getAddress();
             const gardenExplorerAddress = await gardenExplorer.getAddress();
             const badgesAddress = await badges.getAddress();
@@ -76,8 +73,6 @@ import { expect } from 'chai'
             
             console.log('Owner:', owner.address);
             console.log('Other Account:', otherAccount.address);
-
-            await badges.setApprovalForAll(observationAddress, true);
 
         // Ensure otherAccount owns a Garden Explorer token
         await gardenExplorer
@@ -95,5 +90,25 @@ import { expect } from 'chai'
         expect(await badges.hasBadge(otherAccount.address, 1)).to.equal(
             true
         )
+    })
+
+    it('should show an array of ids owned', async function () {
+        const {observation, badges, gardenExplorer, owner, otherAccount} = await deployGardenExplorerBadges()
+        //get our required garden explorer token - connect with otherAccount as thats the one minting observations. 
+        await gardenExplorer.connect(otherAccount).safeMint({ value: ethers.parseEther('0.05') });
+        //then mint an observation
+        await observation.safeMint(otherAccount.address, dummyChecksum);
+        //or two
+        await observation.safeMint(otherAccount.address, dummyChecksum);
+        //now let a different account mint an observation -he'll need his garden explorer token first too
+        await gardenExplorer.connect(owner).safeMint({ value: ethers.parseEther('0.05') });
+        await observation.safeMint(owner.address, dummyChecksum);
+        //the other account mints another observation - should have skipped an id in the array because different account minted 2
+        await observation.safeMint(otherAccount.address, dummyChecksum);
+        //then check the array of ids owned
+        const ids = await observation.ownersTokens(otherAccount.address);
+        console.log(ids)
+        //deep was a requirement for equalling arrays of big numbers
+        expect(await ids).to.be.deep.equal([0n,1n,3n]);
     })
 })

@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * @author x23202556
  * @notice ERC721 contract used as an authentication token for the Garden Explorer platform.
  * A user must own one of these tokens to be able to mint observation tokens.
+ * The token is minted to the user when they pay the minting fee.
  */
 contract GardenExplorer is ERC721, Ownable {
     uint256 private _nextTokenId;
