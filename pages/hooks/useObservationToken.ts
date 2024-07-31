@@ -11,7 +11,7 @@ const useObservationTokens = (userAddress: `0x${string}` | undefined) => {
         args: [userAddress],
     });
     console.log(`useObservationTokens data: ${data}`);
-    return { tokens: data as number[], error, isLoading };
+    return { tokens: data as number, error, isLoading };
 };
 
 export default useObservationTokens;

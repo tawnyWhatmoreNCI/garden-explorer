@@ -9,6 +9,7 @@ import {
     useWaitForTransactionReceipt,
 } from 'wagmi'
 
+import useNextObservationId from '../pages/hooks/useNextObservationId'
 
 export enum ObservationApiStatus {
     IDLE,
@@ -27,6 +28,7 @@ function isStringNotNullOrEmpty(value: string | null | undefined): boolean {
 
 const UploadObservation = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
+    const tokenId = useNextObservationId()
     const [apiStatus, setApiStatus] = useState<{apiStatus: ObservationApiStatus, error?: string}>({
         apiStatus: ObservationApiStatus.IDLE
     })
@@ -44,11 +46,7 @@ const UploadObservation = () => {
             hash,
         })
 
-        const { data: tokenId} = useReadContract({
-            abi: observationAbi.abi,
-            address: observationContract,
-            functionName: 'getNextTokenId',
-        })
+
     
         const { data: gardenBalance } = useReadContract({
             abi: gardenAbi.abi,
@@ -66,7 +64,7 @@ const UploadObservation = () => {
                 writeContract({
                     address: observationContract,
                     abi: observationAbi.abi,
-                    functionName: 'safeMint',
+                    functionName: 'createObservation',
                     args: [address, metadataChecksum],
                 })
             } else {
