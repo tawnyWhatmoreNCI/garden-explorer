@@ -4,7 +4,18 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "hardhat/console.sol";
 
+
+/**
+ * @title Badge
+ * @author x23202556
+ * @notice Struct to represent a badge token. 
+ */
+struct Badge {
+    string name;
+    uint256 tokenId;
+}
 
 /**
  * @title Garden Explorer Badge Collection 
@@ -14,7 +25,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * The badges are minted to the contract default and then awarded to users by the Observation contract.
  */  
 contract GardenExplorerBadges is ERC1155, Ownable {
-    //last badge id
+    //next badge id
     uint256 public NEXT_BADGE_ID = 0;
     //badge names
     mapping(uint256 => string) public badgeNames;
@@ -68,9 +79,37 @@ contract GardenExplorerBadges is ERC1155, Ownable {
      */
     function awardBadge(address to, uint256 badgeId) external {
         require(hasBadge(to, badgeId) == false, "Badge already awarded");
+        console.log("Awarding badge %s to %s", badgeNames[badgeId], to);
         //using internal _safeTransferFrom as safeTransformFrom which is the public function and requires that msg.sender has permission to transfer these tokens
         //The internal _safeTransferFrom function transfers without checking that msg.sender has permissions, ideal as the observation contract is transferring the tokens on behalf of the sender.
         _safeTransferFrom(address(this), to, badgeId, 1, "");
+    }
+
+
+    /**
+     * 
+     * @notice User function. Returns an array of badge ids that have been awarded to an account.
+     * 
+     * @param account address of the account to check
+     * @return array of badge ids awarded to the account
+     */
+    function getBadgesAwarded(address account) public view returns (Badge[] memory) {
+        //get a balance count of the badges. this is so we can set the size of the string array that will be returned.
+        uint256 count = 0;
+    for (uint256 i = 0; i < NEXT_BADGE_ID; i++) {
+        if (hasBadge(account, i)) {
+            count++;
+        }
+    }
+    Badge[] memory badges = new Badge[](count);
+    uint256 index = 0;
+    for (uint256 i = 0; i < NEXT_BADGE_ID; i++) {
+        if (hasBadge(account, i)) {
+            badges[index] =  Badge(badgeNames[i], i);
+            index++;
+        }
+    }
+        return badges;
     }
 
     /**
@@ -80,7 +119,7 @@ contract GardenExplorerBadges is ERC1155, Ownable {
      * @param supply how many badges to mint
      * @param name  name of the badge, stored to mapping
      */
-    function addNewBadge( uint256 supply, string memory name) public onlyOwner {
+    function addNewBadge(uint256 supply, string memory name) public onlyOwner {
         _mint(address(this), NEXT_BADGE_ID, supply, "");
         badgeNames[NEXT_BADGE_ID] = name;
         NEXT_BADGE_ID++;

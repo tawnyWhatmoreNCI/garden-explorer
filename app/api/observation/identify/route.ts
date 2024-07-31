@@ -3,8 +3,9 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 //reference: https://platform.openai.com/docs/guides/vision?lang=node
-const prompt = `Given an image, identify the species of plant or animal present in the image and populate the following JSON object with the appropriate details. 
-The description should be a simple description and a small fun fact of the identification. If the image does not contain a plant, animal, or fungi, return an error JSON object with a meaningful message.
+const prompt = `You are an ecological expert. Identify the species of animal, plant or fungi present in the given image and populate the following JSON object with the appropriate details. 
+Ensure the identification is scientifically accurate and current. If you detect an animal species this takes precedence over plant or fungi species. The description should be a simple description and a small fun fact of the identification. 
+If the image does not contain a plant, animal, or fungi, return an error JSON object with a meaningful message.
 The confidence level of the identification as a value out of 5 that represents how sure you are of your answer, where 5 is the most confident and 1 is the least confident.
 
 JSON Object Template:
@@ -81,8 +82,8 @@ export async function POST(request: Request) {
         var responseData: string = response.choices[0].message.content ?? `{ "error": "No response from OpenAI" }`;
     
     
-   /*
-    //sending back dummy while testing
+   
+    /*//sending back dummy while testing so as not to waste OpenAI tokens
     var responseData: string = `
       {
           "common_name": "Honeybee",

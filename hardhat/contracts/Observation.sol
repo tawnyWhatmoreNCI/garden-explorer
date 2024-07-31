@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "./GardenExplorer.sol";
 import "./GardenBadges.sol";
+import "hardhat/console.sol";
 
 /**
  * @title Garden Explorer Observations
@@ -77,7 +78,7 @@ contract Observation is ERC721, ERC721Enumerable, Ownable {
      * @param mintTo - address to mint the token to
      * @param metadataChecksum  metadata checksum. Used to verify metadata integrity.
      */
-    function safeMint(address mintTo, bytes32 metadataChecksum) public {
+    function createObservation(address mintTo, bytes32 metadataChecksum) public {
         //make sure user has a garden
         require(gardenExplorerContract.balanceOf(mintTo) > 0, "You must own a Garden Explorer token to mint an observation");
        //ensure this contract has permission to transfer badges on behalf of the minter
@@ -97,16 +98,20 @@ contract Observation is ERC721, ERC721Enumerable, Ownable {
      */
     function checkBadgeMilestone(address minter) private {
         uint256 observationCount = balanceOf(minter);
+        console.log("Observation count: ", observationCount);
         if(observationCount == 1) {
             if(!badgesContract.hasBadge(minter,1)) {
+                console.log("awarding badge 1");
                 badgesContract.awardBadge(minter,1);
             }
         } else if(observationCount == 3) {
             if(!badgesContract.hasBadge(minter,2)) {
+                console.log("awarding badge 2");
                 badgesContract.awardBadge(minter,2);
             }
         } else if(observationCount == 5) {
             if(!badgesContract.hasBadge(minter,3)) {
+                console.log("awarding badge 3");
                 badgesContract.awardBadge(minter,3);
             }
         } else if(observationCount == 10) {
