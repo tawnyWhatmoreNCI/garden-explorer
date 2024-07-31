@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     }
     //media url is okay.
     console.log(`About to identify: ${mediaUrl}`)
-    /*
+    
     //open ai 
     const openAiKey: ClientOptions = {
         apiKey: process.env.OPENAI_API_KEY
@@ -78,7 +78,10 @@ export async function POST(request: Request) {
       });
       //we expect the response to be a JSON object because that's what we asked for. I hope this approach is reliable. 
       //if response is not there, we can return json error string. 
-        var responseData: string = response.choices[0].message.content ?? `{ "error": "No response from OpenAI" }`;*/
+        var responseData: string = response.choices[0].message.content ?? `{ "error": "No response from OpenAI" }`;
+    
+    
+   /*
     //sending back dummy while testing
     var responseData: string = `
       {
@@ -93,7 +96,7 @@ export async function POST(request: Request) {
           "species": "Apis mellifera",
           "description": "The honeybee is a social insect known for its role in pollination and producing honey. They live in colonies and are vital for the ecosystem.",
           "id_confidence_level": 5
-      }`
+      }`*/
 
     //clean up backticks and other strange characters so it doesn't fail to parse later.
     responseData = responseData.replace(/[`]|json/g, '')

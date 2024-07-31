@@ -5,6 +5,7 @@ import AnimatedLogo from '../components/AnimatedLogo';
 import StatementPoints from '../components/StatementPoints';
 import Footer from '../components/Footer';
 import UploadObservation from '../components/UploadObservation';
+import ShowUserObservations from '../components/ShowUserObservations';
 
 const About: NextPage = () => {
   return (
@@ -27,6 +28,7 @@ const About: NextPage = () => {
 
         <div className={styles.container}>
           <UploadObservation />
+          <ShowUserObservations />
       <StatementPoints/>
         <div className={styles.content}>
           <h3>The Roots</h3>

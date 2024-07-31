@@ -43,6 +43,19 @@ const UploadObservation = () => {
         useWaitForTransactionReceipt({
             hash,
         })
+
+        const { data: tokenId} = useReadContract({
+            abi: observationAbi.abi,
+            address: observationContract,
+            functionName: 'getNextTokenId',
+        })
+    
+        const { data: gardenBalance } = useReadContract({
+            abi: gardenAbi.abi,
+            address: gardenContract,
+            functionName: 'balanceOf',
+        })
+        
     const { address, isConnected } = useAccount()
 
     async function mintObservation(metadataChecksum: string) {
@@ -63,18 +76,6 @@ const UploadObservation = () => {
             alert('Please connect your wallet')
         }
     }
-
-    const { data: tokenId} = useReadContract({
-        abi: observationAbi.abi,
-        address: observationContract,
-        functionName: 'getNextTokenId',
-    })
-
-    const { data: gardenBalance } = useReadContract({
-        abi: gardenAbi.abi,
-        address: gardenContract,
-        functionName: 'balanceOf',
-    })
 
     const onFileChange = (event: any) => {
         setSelectedFile(event.target.files[0])

@@ -10,8 +10,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * @title Garden Explorer Badge Collection 
  * @author x23202556
  * @notice ERC1155 contract for minting and managing badges. 
- * These are used as a reward for users who have made a certain number of 
- * observations on the Garden Explorer platform.
+ * These badge tokens are awarded to users for completing observation count milestones on the Garden Explorer platform.
+ * The badges are minted to the contract default and then awarded to users by the Observation contract.
  */  
 contract GardenExplorerBadges is ERC1155, Ownable {
     //last badge id

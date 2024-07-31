@@ -12,6 +12,10 @@ import "./GardenBadges.sol";
  * @title Garden Explorer Observations
  * @author x23202556
  * @notice ERC721 contract for minting and managing observation tokens.
+ * These tokens are used to record observations made by users on the Garden Explorer platform.
+ * Each observation token is associated with a checksum that can be used to verify the metadata integrity, useful for validating updates to the associated JSON.
+ * The contract requires the user to have a Garden Explorer token balance which is used as an authentication before minting observation tokens is allowed.
+ * The contract also checks for token balance milestones and rewards users with badges from an ERC1155 for reaching certain observation counts.
  */
 contract Observation is ERC721, ERC721Enumerable, Ownable {
    /**
@@ -143,6 +147,15 @@ contract Observation is ERC721, ERC721Enumerable, Ownable {
 
     /**
      * 
+     * @notice User function. Returns the base URI for the metadata.
+     * @return baseURI for the metadata
+     */
+    function getBaseUri() public view returns (string memory) {
+        return baseURI;
+    }
+
+    /**
+     * 
      * @notice Owner/Admin function. Updates the Garden Explorer contract address.
      * @param newGardenExplorer - new Garden Explorer contract address
      */
@@ -161,7 +174,7 @@ contract Observation is ERC721, ERC721Enumerable, Ownable {
 
     /**
      * 
-     * @notice Owner/Admin function. Updates the Garden Badges contract address.
+     * @notice user function. when metadata updates, the checksum can be updated to verify the metadata integrity.
      * @param tokenId - token ID that the checksum is associated with
      * @param newChecksum - new checksum to set. 
      */
@@ -205,7 +218,7 @@ contract Observation is ERC721, ERC721Enumerable, Ownable {
         tokenIds[i] = tokenOfOwnerByIndex(owner, i);
     }
     return tokenIds;
-}
+    }   
 
     function getNextTokenId() public view returns (uint256) {
         return _nextTokenId;
