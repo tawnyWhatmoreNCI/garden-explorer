@@ -14,6 +14,8 @@ export default buildModule("GEContractsDeployment", (m) => {
     gardenExplorerModule,
     badgesModule,
   ]);
+  //gives the observation contract approval to manage the badge tokens
+  m.call(badgesModule, "setApprovalForAll", [observationModule, true]);
 
   return { gardenExplorerModule, badgesModule, observationModule };
 });

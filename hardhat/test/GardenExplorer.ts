@@ -6,7 +6,8 @@ describe("GardenExplorer", function () {
     async function deployGardenExplorer () {
          const [owner, otherAccount] = await hre.ethers.getSigners();
          const GardenExplorer = await hre.ethers.getContractFactory("GardenExplorer");
-         const gardenExplorer = await GardenExplorer.deploy(owner.address);
+         const baseUri = "https://gardenexplorer.blob.core.windows.net/garden/Artwork_01.png?nftId=";
+         const gardenExplorer = await GardenExplorer.deploy(owner.address, baseUri);
 
         return { gardenExplorer, owner, otherAccount };
     }
