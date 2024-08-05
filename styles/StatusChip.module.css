@@ -1,0 +1,30 @@
+.statusChip {
+    display: inline-block;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    width: auto;
+    border-radius: 50px;
+    border: 1px solid;
+    color: var(--info);
+    border-color: var(--info);
+}
+
+.statusChip.info {
+    color: var(--info);
+    border-color: var(--info);
+}
+
+.statusChip.error {
+    color: var(--error);
+    border-color: var(--error);
+}
+
+.statusChip.warning {
+    color: var(--warning);
+    border-color: var(--warning);
+}
+
+.statusChip.success {
+    color: var(--dullGreen);
+    border-color: var(--dullGreen);
+}

@@ -1,59 +1,53 @@
-import type { NextPage } from 'next';
-import SearchBar from '../components/SearchBar';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import {gardens, iGarden } from '../services/garden';
-import styles from '../styles/Community.module.css';
-import Footer from '../components/Footer';
+import type { NextPage } from 'next'
+import { useEffect, useState } from 'react'
+import useNextObservationId from './hooks/useNextObservationId'
+import ObservationContract from '../src/lib/Observation.json'
+import { useReadContract } from 'wagmi'
+import ObservationCard from '../components/ObservationCard'
 
 const Community: NextPage = () => {
+    const [allTokenIds, setAllTokenIds] = useState<number[]>([])
+    const [nextTokenId, setNextTokenId] = useState<number | undefined>(undefined)
+    const fetchedNextTokenId = useNextObservationId()
 
-    const searchParams = useSearchParams()
-    const [gardenData, setGardenData] = useState<iGarden[]>([]);
-
-    const searchQuery = searchParams.get('q')
     useEffect(() => {
-        const handleSearch = () => {
-            //TODO: implement search filtering
-            const matchedGardens:iGarden[] = gardens.filter((garden) => {
-                //TODO: implement search filtering, currently returns all
-                return garden;
-            });
-
-            setGardenData(matchedGardens);
+        console.log("fetch token id")
+        if (fetchedNextTokenId !== undefined) {
+            const nextId = parseInt(fetchedNextTokenId.toString())
+            setNextTokenId(nextId)
+            setAllTokenIds(Array.from({ length: nextId }, (_, i) => i))
         }
+    }, [fetchedNextTokenId])
 
-        handleSearch(); 
-    }, [searchQuery]); //re-run effect when searchQuery changes
+
+    useEffect(() => {
+        console.log(`contract address: ${process.env.NEXT_PUBLIC_CONTRACT_GARDEN_EXPLORER}`)
+          if(fetchedNextTokenId) {
+                console.log(`token id: ${fetchedNextTokenId}`)
+          }
+
+
+      })
+
+    const { data: baseUri } = useReadContract({
+        address: process.env.NEXT_PUBLIC_CONTRACT_OBSERVATIONS as `0x${string}`,
+        abi: ObservationContract.abi,
+        functionName: 'getBaseUri'
+    })
+
+    const allBaseUris = allTokenIds.map((tokenId) => `${baseUri}${tokenId}.json`)
 
     return (
         <div className="container">
-            <h1>Get Involved!</h1>
-            <p> 
-                Within the Garden Explorer community you can visit other gardens and see what other users have discovered.
-                Give observations ratings for the accuracy of their identifications.
-                Notice something that is misidentified? Share your expertise with us by submitting corrections and earn a badges for your contributions.
-            </p>
-            <SearchBar defaultValue={searchQuery}/>
-            { gardenData.length === 0 ? (
-                 searchQuery ? (
-                    <p className="searchResults"> 
-                        No gardens found for &apos;{searchQuery}&apos;.
-                    </p>) : (
-                    <p className="searchResults">
-                        No gardens found.
-                    </p>
-                    )
-             ) : (
-                <div>
-                    {gardenData.map((garden) => (
-                        <div key={garden.id}>
-                            <h2>{garden.owner}</h2>
-                        </div>
-                    ))}
-                </div>
-            )}
-            <Footer/>
+            <p>Next Token Id: {nextTokenId?.toString()}</p>
+            <p>All Tokens: {allTokenIds.toString()}</p>
+            <p>Base Uri: {baseUri as string}</p>
+            <div className="cardContainer">
+            {allBaseUris.map((nftUri) => (
+                <ObservationCard key={nftUri} nftUri={nftUri} />
+            ))}
+            </div>
+            
         </div>
     )
 }
