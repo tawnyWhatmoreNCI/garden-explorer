@@ -3,6 +3,7 @@ import {useReadContract, useAccount} from 'wagmi'
 import ObservationCard from './ObservationCard'
 import ObservationContract from '../src/lib/Observation.json'
 import useObservationTokens from '../pages/hooks/useObservationToken'
+import styles from '../styles/ShowUserObservation.module.css'
 
 const ShowUserObservations = () => {
     const { address, isConnected } = useAccount()
@@ -24,9 +25,10 @@ const ShowUserObservations = () => {
     }, [tokens, baseUri])
 
     return (
-        <div className="container">
-            <h1>Your Observation Tokens</h1>
-            {isLoading && <p>Loading...</p>}
+        <div className="cardContainer">
+            {isLoading && <p className="textCenter">Loading...</p>}
+            {error && <p className="textCenter">Error: {error.toString()}</p>}
+            {nftUris.length === 0 && <p className="textCenter">You have 0 observations. Upload an observation to get started!</p>}
             {nftUris.map((nftUri) => (
                 <ObservationCard nftUri={nftUri} />
             ))}

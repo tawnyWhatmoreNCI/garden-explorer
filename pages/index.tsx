@@ -33,9 +33,6 @@ const About: NextPage = () => {
                 <AnimatedLogo />
 
                 <div className={styles.container}>
-                    <BadgesShowcase />
-                    <UploadObservation />
-                    <ShowUserObservations />
                     <StatementPoints />
 
                     <div className={styles.content}>
