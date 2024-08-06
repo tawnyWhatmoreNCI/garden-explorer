@@ -1,7 +1,7 @@
 import { useReadContract, useAccount } from 'wagmi'
 import BadgesContract from '../../src/lib/GardenBadges.json'
 
-interface Badge {
+export interface Badge {
     name: string,
     tokenId: bigint
 }

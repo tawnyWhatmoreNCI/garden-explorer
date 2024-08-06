@@ -6,11 +6,7 @@ import {
     useWaitForTransactionReceipt,
 } from 'wagmi';
 import observationAbi from '../src/lib/Observation.json'
-import gardenAbi from '../src/lib/GardenExplorer.json'
 import { useEffect, useState } from 'react';
-import Footer from '../components/Footer';
-import { Tooltip } from 'react-tooltip';
-import  useObservationTokens  from './hooks/useObservationToken';
 import useNextObservationId from './hooks/useNextObservationId';
 import useGardenExplorerBalance  from './hooks/useGardenExplorerBalance';
 import Notification, { NotificationType } from '../components/Notification'
@@ -52,6 +48,9 @@ const [description, setDescription] = useState<string>("")
     const onDescriptionChange = (event: any) => {
         setDescription(event.target.value)
     }
+
+    const [aiIdCommonName, setAiIdCommonName] = useState<string>("")
+
 
 
     const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -133,6 +132,9 @@ const [description, setDescription] = useState<string>("")
                 //empty userObservation array - for users to suggest their thougths on the observation
                 //userobservation will be observer: address, common_name: string, description: string, id_confidence_level: string
                 metadata.userObservations = []
+
+                //save common name as state for use in progress notification later.
+                setAiIdCommonName(metadata.common_name)
 
                 // Convert BigInt properties to strings
                 const replacer = (key: string, value: any) => {
@@ -231,7 +233,7 @@ const [description, setDescription] = useState<string>("")
                             </div>
                         }
                         <textarea rows="3" cols="50" 
-                        placeholder="Enter a description of what you saw. This will help AI determine its results more accurately."
+                        placeholder="(Optional) Enter a description of what you saw. This will help AI determine its results more accurately."
                          className={styles.description} 
                          disabled={!selectedFile} 
                          onChange={onDescriptionChange}/>
@@ -249,31 +251,31 @@ const [description, setDescription] = useState<string>("")
                     {/*API loading status */}
                     {apiStatus.apiStatus === ObservationApiStatus.PREPARING && (
                         <Notification
-                            message={'Preparing to upload observation'}
+                            message={'Preparing to upload observation...'}
                             type={NotificationType.INFO}
                         />
                     )}
                     {apiStatus.apiStatus === ObservationApiStatus.UPLOADING_MEDIA && (
                         <Notification
-                            message={'Uploading media'}
+                            message={'Uploading media...'}
                             type={NotificationType.INFO}
                         />
                     )}
                     {apiStatus.apiStatus === ObservationApiStatus.IDENTIFYING && (
                         <Notification
-                            message={'Identifying observation'}
+                            message={'Identifying observation...'}
                             type={NotificationType.INFO}
                         />
                     )}
                     {apiStatus.apiStatus === ObservationApiStatus.UPLOADING_METADATA && (
                         <Notification
-                            message={'Uploading metadata'}
+                            message={'Uploading metadata...'}
                             type={NotificationType.INFO}
                         />
                     )}
                     {apiStatus.apiStatus === ObservationApiStatus.MINTING && (
                         <Notification
-                            message={'Minting observation'}
+                            message={aiIdCommonName ? `Identified as ${aiIdCommonName}. Minting observation...`:`Minting observation...`}
                             type={NotificationType.INFO}
                         />
                     )}
@@ -285,7 +287,7 @@ const [description, setDescription] = useState<string>("")
                     )}
                     {isConfirming && (
                         <Notification
-                            message={'Waiting for confirmation'}
+                            message={'Waiting for confirmation...'}
                             type={NotificationType.INFO}
                         />
                     )}
