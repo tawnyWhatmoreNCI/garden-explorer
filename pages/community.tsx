@@ -39,9 +39,8 @@ const Community: NextPage = () => {
 
     return (
         <div className="container">
-            <p>Next Token Id: {nextTokenId?.toString()}</p>
-            <p>All Tokens: {allTokenIds.toString()}</p>
-            <p>Base Uri: {baseUri as string}</p>
+            <h1>Community Observations</h1>
+            <p>Here you can browse all of the observations minted by the community</p>
             <div className="cardContainer">
             {allBaseUris.map((nftUri) => (
                 <ObservationCard key={nftUri} nftUri={nftUri} />

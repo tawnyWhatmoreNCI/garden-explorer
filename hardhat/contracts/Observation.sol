@@ -101,17 +101,14 @@ contract Observation is ERC721, ERC721Enumerable, Ownable {
         console.log("Observation count: ", observationCount);
         if(observationCount == 1) {
             if(!badgesContract.hasBadge(minter,1)) {
-                console.log("awarding badge 1");
                 badgesContract.awardBadge(minter,1);
             }
         } else if(observationCount == 3) {
             if(!badgesContract.hasBadge(minter,2)) {
-                console.log("awarding badge 2");
                 badgesContract.awardBadge(minter,2);
             }
         } else if(observationCount == 5) {
             if(!badgesContract.hasBadge(minter,3)) {
-                console.log("awarding badge 3");
                 badgesContract.awardBadge(minter,3);
             }
         } else if(observationCount == 10) {

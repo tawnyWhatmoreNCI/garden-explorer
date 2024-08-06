@@ -10,6 +10,7 @@ import {
 import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import Navbar from '../components/Navbar';
 import styles from '../styles/Home.module.css';
+import BadgesShowcase from '../components/BadgeShowcase';
 
 const wagmiConfig = getDefaultConfig({
   appName: 'Garden Explorer',
@@ -34,6 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     })}>
           <main className={styles.main}>
             <Navbar />
+            <BadgesShowcase/>
             <Component {...pageProps} />
           </main>
         </RainbowKitProvider>

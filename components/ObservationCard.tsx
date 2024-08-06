@@ -69,6 +69,7 @@ const ObservationCard = ({ nftUri }: { nftUri: string }) => {
                         target="_blank"
                         rel="noreferrer"
                     >
+                        
                         <img
                             className={styles.observationMedia}
                             src={observationData.mediaUrl}
@@ -76,13 +77,16 @@ const ObservationCard = ({ nftUri }: { nftUri: string }) => {
                         />
                     </a>
                     <div className={styles.observationDetails}>
+                        
                         <h2>{observationData.common_name}</h2>
                         <p className={styles.attributes}>
-                            ID Rating:{' '}
+                            <b>ID Rating:</b>{' '}
                             {observationData.id_confidence_level != 'AI'
                                 ? `${observationData.id_confidence_level}/5`
                                 : ' AI'}
                         </p>
+                        <p className={styles.attributes}>
+                            <b>Observer:</b> {observationData.observer}</p>
                         <p>{observationData.description}</p>
 
                         <p className={styles.attributes}>
@@ -106,7 +110,7 @@ const ObservationCard = ({ nftUri }: { nftUri: string }) => {
                         <p className={styles.attributes}>
                             <b>Species:</b> {observationData.species}
                         </p>
-
+                        
                         <div className={styles.chipContainer}>
                             {checksum && remoteChecksum ? (
                                 <div>

@@ -134,11 +134,16 @@ button {
   width: 90%;
 }
 
-.cardContainer { 
+.cardContainer, .row { 
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+}
+
+.row.centered {
+  justify-content: center;
+  align-content: center;
 }
 
 .textCenter { 
