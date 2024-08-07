@@ -1,5 +1,5 @@
 import { useReadContract, useAccount } from 'wagmi';
-import BadgesContract from '../../src/lib/GardenBadges.json';
+import BadgesContract from '../src/lib/GardenBadges.json';
 
 export interface Badge {
     name: string;

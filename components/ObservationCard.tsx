@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import useObservationChecksum from '../pages/hooks/useObservationChecksum'
+import useObservationChecksum from '../hooks/useObservationChecksum'
 import styles from '../styles/ObservationCard.module.css'
 import { useAccount } from 'wagmi'
 import { sha256 } from 'js-sha256'

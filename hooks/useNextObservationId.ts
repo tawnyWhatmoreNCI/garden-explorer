@@ -1,5 +1,5 @@
 import { useReadContract } from 'wagmi'
-import observationAbi from '../../src/lib/Observation.json'
+import observationAbi from '../src/lib/Observation.json'
 
 const useNextObservationId = () => {
     const observationContract = process.env

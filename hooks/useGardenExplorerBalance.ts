@@ -1,6 +1,6 @@
 import { useReadContract } from 'wagmi';
 import { useAccount } from 'wagmi';
-import gardenContract from '../../src/lib/GardenExplorer.json';
+import gardenContract from '../src/lib/GardenExplorer.json';
 
 const useGardenExplorerBalance = () => {
     const { address: userAddress } = useAccount();
