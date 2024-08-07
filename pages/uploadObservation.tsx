@@ -233,7 +233,7 @@ const [description, setDescription] = useState<string>("")
                                 <label htmlFor="file" className={styles.filelabel}>First, Upload An Image</label>
                             </div>
                         }
-                        <textarea rows="3" cols="50" 
+                        <textarea rows={3} cols={50}
                         placeholder="(Optional) Enter a description of what you saw. This will help AI determine its results more accurately."
                          className={styles.description} 
                          disabled={!selectedFile} 

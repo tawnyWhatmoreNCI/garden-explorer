@@ -4,9 +4,6 @@ import styles from '../styles/Home.module.css'
 import AnimatedLogo from '../components/AnimatedLogo'
 import StatementPoints from '../components/StatementPoints'
 import Footer from '../components/Footer'
-import UploadObservation from '../components/UploadObservation'
-import ShowUserObservations from '../components/ShowUserObservations'
-import BadgesShowcase from '../components/BadgeShowcase'
 
 const About: NextPage = () => {
     return (
