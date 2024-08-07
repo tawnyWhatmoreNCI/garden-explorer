@@ -4,6 +4,7 @@ import styles from '../styles/ObservationCard.module.css'
 import { useAccount } from 'wagmi'
 import { sha256 } from 'js-sha256'
 import StatusChip, { StatusChipType } from './StatusChip'
+import Image from 'next/image'
 
 export interface ObservationType {
     observer: string
@@ -24,20 +25,17 @@ export interface ObservationType {
 }
 
 export interface ObservationProposal {
-    proposer: string,
-    common_name: string,
+    proposer: string
+    common_name: string
     description: string
-    ,id_confidence_level: string
+    id_confidence_level: string
 }
 
-
-
 function showProposedModal() {
-    alert("Propose Observation Correction Modal");
+    alert('Propose Observation Correction Modal')
 }
 
 const ObservationCard = ({ nftUri }: { nftUri: string }) => {
-    const { address, isConnected } = useAccount()
     const [observationData, setObservationData] =
         useState<ObservationType | null>(null)
 
@@ -58,7 +56,7 @@ const ObservationCard = ({ nftUri }: { nftUri: string }) => {
                 const hashAsHex = `0x${hash.hex()}`
                 setRemoteChecksum(hashAsHex)
             })
-    }, [])
+    }, [nftUri])
 
     return (
         <div className={styles.card}>
@@ -69,15 +67,13 @@ const ObservationCard = ({ nftUri }: { nftUri: string }) => {
                         target="_blank"
                         rel="noreferrer"
                     >
-                        
-                        <img
+                        <Image
                             className={styles.observationMedia}
                             src={observationData.mediaUrl}
                             alt={observationData.common_name}
                         />
                     </a>
                     <div className={styles.observationDetails}>
-                        
                         <h2>{observationData.common_name}</h2>
                         <p className={styles.attributes}>
                             <b>ID Rating:</b>{' '}
@@ -86,11 +82,13 @@ const ObservationCard = ({ nftUri }: { nftUri: string }) => {
                                 : ' AI'}
                         </p>
                         <p className={styles.attributes}>
-                            <b>Observer:</b> {observationData.observer}</p>
+                            <b>Observer:</b> {observationData.observer}
+                        </p>
                         <p>{observationData.description}</p>
 
                         <p className={styles.attributes}>
-                            <b>Scientific Name:</b> {observationData.scientific_name}
+                            <b>Scientific Name:</b>{' '}
+                            {observationData.scientific_name}
                         </p>
                         <p className={styles.attributes}>
                             <b>Kingdom:</b> {observationData.kingdom}
@@ -110,7 +108,7 @@ const ObservationCard = ({ nftUri }: { nftUri: string }) => {
                         <p className={styles.attributes}>
                             <b>Species:</b> {observationData.species}
                         </p>
-                        
+
                         <div className={styles.chipContainer}>
                             {checksum && remoteChecksum ? (
                                 <div>

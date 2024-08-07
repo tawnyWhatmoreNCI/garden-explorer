@@ -30,7 +30,7 @@ const ShowUserObservations = () => {
             {error && <p className="textCenter">Error: {error.toString()}</p>}
             {nftUris.length === 0 && <p className="textCenter">You have 0 observations. Upload an observation to get started!</p>}
             {nftUris.map((nftUri) => (
-                <ObservationCard nftUri={nftUri} />
+                <ObservationCard key={nftUri} nftUri={nftUri} />
             ))}
         </div>
     )

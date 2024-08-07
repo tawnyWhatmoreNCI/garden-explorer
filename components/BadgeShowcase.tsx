@@ -4,6 +4,7 @@ import useBadgesUri from '../pages/hooks/useBadgesUri'
 import styles from '../styles/Badges.module.css'
 import { Tooltip } from 'react-tooltip'
 import { Badge } from '../pages/hooks/useBadgesToken'
+import Image from 'next/image'
 
 interface BadgeMetadata {
     name: string
@@ -21,14 +22,14 @@ const BadgeView = ({
     const [badgeMetadata, setBadgeMetadata] = useState<BadgeMetadata>()
 
     useEffect(() => {
-        uri = uri.replace('{id}', blockchainBadge.tokenId.toString())
-        fetch(uri)
+        const updatedUri = uri.replace('{id}', blockchainBadge.tokenId.toString())
+         fetch(updatedUri)
             .then((response) => response.json())
             .then((data) => {
                 console.log(`badge: ${data}`)
                 setBadgeMetadata(data)
             })
-    })
+    }, [uri, blockchainBadge.tokenId])
 
     return (
         <div>
@@ -37,10 +38,11 @@ const BadgeView = ({
                 place="top"
                 content={`${blockchainBadge.name}: ${badgeMetadata?.description}`}
             />
-            <img
+            <Image
                 data-tooltip-id={`badge${blockchainBadge.tokenId}`}
                 className={styles.badge}
-                src={badgeMetadata?.image}
+                src={badgeMetadata?.image ?? ""}
+                alt={badgeMetadata?.name ?? ""}
             />
         </div>
     )

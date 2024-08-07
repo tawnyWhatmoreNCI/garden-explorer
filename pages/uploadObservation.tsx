@@ -11,6 +11,7 @@ import useNextObservationId from './hooks/useNextObservationId';
 import useGardenExplorerBalance  from './hooks/useGardenExplorerBalance';
 import Notification, { NotificationType } from '../components/Notification'
 import styles from '../styles/UploadObservation.module.css';
+import Link from 'next/link';
 
 export enum ObservationApiStatus {
     IDLE,
@@ -208,7 +209,7 @@ const [description, setDescription] = useState<string>("")
                 )}
                 {!hasGardenBalance && (
                     <p className={styles.centered}>
-                        To upload an observation, you first need to mint a Garden Explorer NFT from <a href="/userSpace">Your Space</a>
+                        To upload an observation, you first need to mint a Garden Explorer NFT from <Link href="/userSpace">Your Space</Link>
                     </p>
                 )}
                 
