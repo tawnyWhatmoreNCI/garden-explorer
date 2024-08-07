@@ -6,6 +6,7 @@ import {
 import useGardenExplorerBalance from './hooks/useGardenExplorerBalance'
 import { useRouter } from 'next/router'
 import { ObservationProposal } from '../components/ObservationCard';
+import ObservationAbi from '../src/lib/Observation.json'
 
 {/**
      This page is a form that allows users to propose what they think a certain observation might be.
@@ -39,10 +40,10 @@ export const ProposeIdentification: NextPage = () => {
     
         // Step 2: Convert form data to JSON
         const proposal: ObservationProposal = {
-            address,
-            commonName,
-            speciesDescription,
-            confidence: parseInt(confidence, 1),
+            proposer: address,
+            common_name: commonName,
+            description: speciesDescription,
+            id_confidence_level: confidence || '1',
         };
     
         try {
@@ -63,7 +64,9 @@ export const ProposeIdentification: NextPage = () => {
             // Step 6: Update blockchain with the new checksum
             const checksum = calculateChecksum(updatedMetadata);
             await writeContract({
+                abi: ObservationAbi.abi,
                 address: observationContract,
+                functionName: 'updateChecksum',
                 args: [tokenId, checksum],
             });
     
@@ -94,7 +97,7 @@ export const ProposeIdentification: NextPage = () => {
             <p>Post: {router.query.slug}</p>
             <h1>Propose an Identification</h1>
             <p>Tell us what you think this Observation is.</p>
-            <form>
+            <form onSubmit={updateObservation}>
                 <label>
                     Common Name:
                     <input type="text" name="commonName" />
@@ -107,7 +110,7 @@ export const ProposeIdentification: NextPage = () => {
                     Confidence of your identification
                     <input type="range" min="1" max="5" value="1" className="confidenceSlider" id="confidence"/>
                 </label>
-                <button onSubmit={() => updateObservation()}>Submit</button>
+                <button>Submit</button>
             </form>
         </div>
     )

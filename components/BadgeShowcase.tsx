@@ -4,7 +4,6 @@ import useBadgesUri from '../pages/hooks/useBadgesUri'
 import styles from '../styles/Badges.module.css'
 import { Tooltip } from 'react-tooltip'
 import { Badge } from '../pages/hooks/useBadgesToken'
-import Image from 'next/image'
 
 interface BadgeMetadata {
     name: string
@@ -38,7 +37,7 @@ const BadgeView = ({
                 place="top"
                 content={`${blockchainBadge.name}: ${badgeMetadata?.description}`}
             />
-            <Image
+            <img
                 data-tooltip-id={`badge${blockchainBadge.tokenId}`}
                 className={styles.badge}
                 src={badgeMetadata?.image ?? ""}
