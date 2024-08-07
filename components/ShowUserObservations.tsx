@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useReadContract, useAccount} from 'wagmi'
 import ObservationCard from './ObservationCard'
 import ObservationContract from '../src/lib/Observation.json'
-import useObservationTokens from '../pages/hooks/useObservationToken'
+import useObservationTokens from '../hooks/useObservationToken'
 import styles from '../styles/ShowUserObservation.module.css'
 
 const ShowUserObservations = () => {

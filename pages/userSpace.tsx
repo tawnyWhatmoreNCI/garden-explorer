@@ -10,8 +10,8 @@ import ContractIcon from '../src/images/contractIcon.svg';
 import { useEffect } from 'react';
 import Footer from '../components/Footer';
 import { Tooltip } from 'react-tooltip';
-import  useObservationTokens  from './hooks/useObservationToken';
-import useGardenExplorerBalance  from './hooks/useGardenExplorerBalance';
+import  useObservationTokens  from '../hooks/useObservationToken';
+import useGardenExplorerBalance  from '../hooks/useGardenExplorerBalance';
 import Link from 'next/link';
 
 function UploadBar() {

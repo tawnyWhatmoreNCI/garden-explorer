@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import useBadgesTokens from '../pages/hooks/useBadgesToken'
-import useBadgesUri from '../pages/hooks/useBadgesUri'
+import useBadgesTokens from '../hooks/useBadgesToken'
+import useBadgesUri from '../hooks/useBadgesUri'
 import styles from '../styles/Badges.module.css'
 import { Tooltip } from 'react-tooltip'
-import { Badge } from '../pages/hooks/useBadgesToken'
+import { Badge } from '../hooks/useBadgesToken'
 
 interface BadgeMetadata {
     name: string

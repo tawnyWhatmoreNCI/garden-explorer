@@ -7,8 +7,8 @@ import {
 } from 'wagmi';
 import observationAbi from '../src/lib/Observation.json'
 import { useEffect, useState } from 'react';
-import useNextObservationId from './hooks/useNextObservationId';
-import useGardenExplorerBalance  from './hooks/useGardenExplorerBalance';
+import useNextObservationId from '../hooks/useNextObservationId';
+import useGardenExplorerBalance  from '../hooks/useGardenExplorerBalance';
 import Notification, { NotificationType } from '../components/Notification'
 import styles from '../styles/UploadObservation.module.css';
 import Link from 'next/link';

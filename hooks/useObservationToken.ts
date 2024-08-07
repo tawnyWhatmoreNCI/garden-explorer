@@ -1,5 +1,5 @@
 import { useReadContract } from 'wagmi';
-import observationContract from '../../src/lib/Observation.json';
+import observationContract from '../src/lib/Observation.json';
 
 const useObservationTokens = (userAddress: `0x${string}` | undefined) => {
     console.log(`useObservationTokens userAddress: ${userAddress}`);

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import useNextObservationId from './hooks/useNextObservationId'
+import useNextObservationId from '../hooks/useNextObservationId'
 import ObservationContract from '../src/lib/Observation.json'
 import { useReadContract } from 'wagmi'
 import ObservationCard from '../components/ObservationCard'

@@ -3,7 +3,7 @@ import {
     useWriteContract,
     useAccount,
 } from 'wagmi'
-import useGardenExplorerBalance from './hooks/useGardenExplorerBalance'
+import useGardenExplorerBalance from '../hooks/useGardenExplorerBalance'
 import { useRouter } from 'next/router'
 import { ObservationProposal } from '../components/ObservationCard';
 import ObservationAbi from '../src/lib/Observation.json'
