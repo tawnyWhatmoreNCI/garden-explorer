@@ -48,6 +48,11 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
+        env:
+          AZURE_STORAGE_SAS_TOKEN: ${{secrets.AZURE_STORAGE_SAS_TOKEN}} 
+          AZURE_STORAGE_ACCOUNT_NAME: ${{secrets.AZURE_STORAGE_ACCOUNT_NAME}} 
+          OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}} 
+        
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
