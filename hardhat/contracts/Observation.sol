@@ -7,7 +7,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "./GardenExplorer.sol";
 import "./GardenBadges.sol";
-import "hardhat/console.sol";
 
 /**
  * @title Garden Explorer Observations
@@ -98,7 +97,6 @@ contract Observation is ERC721, ERC721Enumerable, Ownable {
      */
     function checkBadgeMilestone(address minter) private {
         uint256 observationCount = balanceOf(minter);
-        console.log("Observation count: ", observationCount);
         if(observationCount == 1) {
             if(!badgesContract.hasBadge(minter,1)) {
                 badgesContract.awardBadge(minter,1);

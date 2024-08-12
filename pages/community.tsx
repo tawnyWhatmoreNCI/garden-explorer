@@ -25,10 +25,8 @@ const Community: NextPage = () => {
           if(fetchedNextTokenId) {
                 console.log(`token id: ${fetchedNextTokenId}`)
           }
-
-
       })
-
+      
     const { data: baseUri } = useReadContract({
         address: process.env.NEXT_PUBLIC_CONTRACT_OBSERVATIONS as `0x${string}`,
         abi: ObservationContract.abi,

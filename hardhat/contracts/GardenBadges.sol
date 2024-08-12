@@ -79,7 +79,6 @@ contract GardenExplorerBadges is ERC1155, Ownable {
      */
     function awardBadge(address to, uint256 badgeId) external {
         require(hasBadge(to, badgeId) == false, "Badge already awarded");
-        console.log("Awarding badge %s to %s", badgeNames[badgeId], to);
         //using internal _safeTransferFrom as safeTransformFrom which is the public function and requires that msg.sender has permission to transfer these tokens
         //The internal _safeTransferFrom function transfers without checking that msg.sender has permissions, ideal as the observation contract is transferring the tokens on behalf of the sender.
         _safeTransferFrom(address(this), to, badgeId, 1, "");
