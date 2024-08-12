@@ -37,6 +37,7 @@ const UploadObservation: NextPage = () => {
         .NEXT_PUBLIC_CONTRACT_OBSERVATIONS as `0x${string}`
     const gardenContract = process.env
         .NEXT_PUBLIC_CONTRACT_GARDEN_EXPLORER as `0x${string}`
+    const environmentUri = process.env.NEXT_PUBLIC_ENVIRONMENT_URI
 
     //web3
     const { data: hash, error, isPending, writeContract } = useWriteContract()
@@ -93,7 +94,7 @@ const UploadObservation: NextPage = () => {
         //1: Make a POST request to upload the media
         console.log(`formData: ${JSON.stringify(formData)}`)
         setApiStatus({ apiStatus: ObservationApiStatus.UPLOADING_MEDIA })
-        const response = await fetch('/api/observation/uploadMedia', {
+        const response = await fetch(`${environmentUri}/api/observation/uploadMedia`, {
             method: 'POST',
             body: formData, // Send formData directly without JSON.stringify
         })
@@ -112,7 +113,7 @@ const UploadObservation: NextPage = () => {
             //2: Call the recognition API
             setApiStatus({ apiStatus: ObservationApiStatus.IDENTIFYING })
             const recognitionResponse = await fetch(
-                '/api/observation/identify',
+                `${environmentUri}/api/observation/identify`,
                 {
                     method: 'POST',
                     headers: {
@@ -167,7 +168,7 @@ const UploadObservation: NextPage = () => {
                     apiStatus: ObservationApiStatus.UPLOADING_METADATA,
                 })
                 const metadataResponse = await fetch(
-                    '/api/observation/uploadMetadata',
+                    `${environmentUri}/api/observation/uploadMetadata`,
                     {
                         method: 'POST',
                         headers: {
