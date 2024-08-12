@@ -51,7 +51,7 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   return (
     <div>
       <div className={styles.mintRow}>
-        <input disabled data-tooltip-id="input-tooltip" type="number" className="inputBar" value={inputAmount ?? ""} min={mintPrice as number} placeholder="Enter mint price" onChange={handleChange} />
+        <input type="number" className="inputBar" value={inputAmount ?? ""} min={mintPrice as number} placeholder="Enter mint price" onChange={handleChange} />
           <button data-tooltip-id="button-tooltip"  className="actionButton" disabled={isPending || !isConnected} onClick={mint}>
             {isPending ? 'Confirming...' : 'Mint'}
           </button>
@@ -73,12 +73,6 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         place="top"
         content={"Connect your wallet to mint this NFT."}/>
         )}
-
-        <Tooltip
-                id="input-tooltip"
-                place="top"
-                content={"The naming feature is not yet available, but you can still mint!"}/>
-
         <Tooltip
                 id="contract-tooltip"
                 place="top"

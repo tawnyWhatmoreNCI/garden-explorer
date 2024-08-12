@@ -59,8 +59,7 @@ function MintGardenLayout({ isConnected }: { isConnected: boolean }) {
 
             <MintGarden />
             <p>
-                Enter a name for your Garden. Remember, this name will be public and visible to others so do not include any personal information, just keep it fun!
-                If you choose not to enter a custom name we will use your wallet address as the name of your garden.
+                By minting this token and paying the minting fee you will get access to the observation identification and minting features.
             </p>
         </div>
     );
