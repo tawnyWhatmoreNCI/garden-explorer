@@ -14,12 +14,11 @@ const About: NextPage = () => {
                     content="Connecting children to nature"
                     name="Garden Explorer"
                 />
-                <link href="/favicon.ico" rel="icon" />
+                <link rel="shortcut icon" href="/static/favicon.ico" />
                 <link
                     rel="stylesheet"
                     href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
                 />
-                <link rel="stylesheet" href="/src/fonts/Magica.otf" />
             </Head>
 
             <main className={styles.main}>
