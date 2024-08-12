@@ -44,13 +44,33 @@ import { expect } from 'chai'
 
         return { observation, badges, gardenExplorer, owner, otherAccount }
     }
+
     it('Should set the right owner', async function () {
         const { observation, owner } = await deployGardenExplorerBadges()
 
         expect(await observation.owner()).to.equal(owner.address)
     })
 
-    it('Should check that the user cannot mint without owning a Garden Explorer token', async function () {
+    it('Should set the right base uri', async function () {
+        const { observation } = await deployGardenExplorerBadges()
+
+        expect(await observation.getBaseUri()).to.equal(
+            'https://gardenExplorerBadges.blob.core.windows.net/metadata/'
+        )
+    })
+
+    it("should correctly set and retrieve observation metadata", async function() {
+        const {observation, badges, gardenExplorer, owner, otherAccount} = await deployGardenExplorerBadges();
+        // Mint an observation
+        await gardenExplorer.connect(otherAccount).safeMint({ value: ethers.parseEther('0.05') });
+        await observation.createObservation(otherAccount.address, dummyChecksum);
+    
+        // Check the metadata
+        const tokenUri = await observation.tokenURI(0);
+        expect(tokenUri).to.equal('https://gardenExplorerBadges.blob.core.windows.net/metadata/0');
+    });
+
+    it('Should not allow a mint without owning a Garden Explorer Token', async function () {
         const { observation, badges, gardenExplorer, owner, otherAccount } =
             await deployGardenExplorerBadges()
 
@@ -61,18 +81,32 @@ import { expect } from 'chai'
         )
     })
 
-    it('should mint an observation', async function () {
+    it('Should allow minting an observation with a Garden Explorer Token', async function () {
+        const { observation, badges, gardenExplorer, owner, otherAccount } =
+            await deployGardenExplorerBadges()
+
+        await gardenExplorer
+            .connect(otherAccount)
+            .safeMint({ value: ethers.parseEther('0.05') })
+
+        const mintTx = await observation.createObservation(
+            otherAccount.address,
+            dummyChecksum
+        )
+
+        await mintTx.wait()
+
+        expect(await badges.hasBadge(otherAccount.address, 1)).to.equal(
+            true
+        )
+    })
+
+    it('should mint an observation if user has a garden explorer token ', async function () {
         const { observation, badges, gardenExplorer, owner, otherAccount } =
             await deployGardenExplorerBadges()
             const observationAddress = await observation.getAddress();
             const gardenExplorerAddress = await gardenExplorer.getAddress();
             const badgesAddress = await badges.getAddress();
-            console.log('Observation deployed to:', observationAddress);
-            console.log('Garden Explorer deployed to:', gardenExplorerAddress);
-            console.log('Badges deployed to:', badgesAddress);
-            
-            console.log('Owner:', owner.address);
-            console.log('Other Account:', otherAccount.address);
 
         // Ensure otherAccount owns a Garden Explorer token
         await gardenExplorer
@@ -92,6 +126,54 @@ import { expect } from 'chai'
         )
     })
 
+    it("should correctly update the observation count", async function() {
+        const {observation, badges, gardenExplorer, owner, otherAccount} = await deployGardenExplorerBadges();
+        // Mint 3 observations
+        await gardenExplorer.connect(otherAccount).safeMint({ value: ethers.parseEther('0.05') });
+        for (let i = 0; i < 3; i++) {
+            await observation.createObservation(otherAccount.address, dummyChecksum);
+        }
+    
+        // Check the observation count
+        const count = await observation.balanceOf(otherAccount.address);
+        expect(count).to.equal(3);
+    });
+
+    it("should award a badge if the user has minted 5 observations", async function() {
+        const {observation, badges, gardenExplorer, owner, otherAccount} = await deployGardenExplorerBadges();
+        //mint 5 observations
+        await gardenExplorer.connect(otherAccount).safeMint({ value: ethers.parseEther('0.05') });
+        for (let i = 0; i < 5; i++) {
+            await observation.createObservation(otherAccount.address, dummyChecksum);
+        }
+        //check if the user has the badge
+        expect(await badges.hasBadge(otherAccount.address, 3)).to.equal(true);
+    })
+
+    it("should have badge id 1,2 and 3 if the user has minted 5 observations", async function() {  
+        const {observation, badges, gardenExplorer, owner, otherAccount} = await deployGardenExplorerBadges();
+        //mint 5 observations
+        await gardenExplorer.connect(otherAccount).safeMint({ value: ethers.parseEther('0.05') });
+        for (let i = 0; i < 5; i++) {
+            await observation.createObservation(otherAccount.address, dummyChecksum);
+        }
+        //check if the user has the badge
+        expect(await badges.hasBadge(otherAccount.address, 1)).to.equal(true);
+        expect(await badges.hasBadge(otherAccount.address, 2)).to.equal(true);
+        expect(await badges.hasBadge(otherAccount.address, 3)).to.equal(true);
+    })
+
+    it("should not award badge id 3 if the user has minted less than 5 observations", async function() {
+        const {observation, badges, gardenExplorer, owner, otherAccount} = await deployGardenExplorerBadges();
+        //mint 4 observations
+        await gardenExplorer.connect(otherAccount).safeMint({ value: ethers.parseEther('0.05') });
+        for (let i = 0; i < 4; i++) {
+            await observation.createObservation(otherAccount.address, dummyChecksum);
+        }
+        //check if the user has the badge
+        expect(await badges.hasBadge(otherAccount.address, 3)).to.equal(false);
+    })
+
     it('should show an array of ids owned', async function () {
         const {observation, badges, gardenExplorer, owner, otherAccount} = await deployGardenExplorerBadges()
         //get our required garden explorer token - connect with otherAccount as thats the one minting observations. 
@@ -107,9 +189,29 @@ import { expect } from 'chai'
         await observation.createObservation(otherAccount.address, dummyChecksum);
         //then check the array of ids owned
         const ids = await observation.ownersTokens(otherAccount.address);
-        console.log(ids)
         //deep was a requirement for equalling arrays of big numbers
         expect(await ids).to.be.deep.equal([0n,1n,3n]);
+    })
+
+    it("should return true for matching checksum", async function () {
+        const {observation, badges, gardenExplorer, owner, otherAccount} = await deployGardenExplorerBadges();
+        // Mint an observation
+        await gardenExplorer.connect(otherAccount).safeMint({ value: ethers.parseEther('0.05') });
+        await observation.createObservation(otherAccount.address, dummyChecksum);
+    
+        //pass in dummy checksum to check if it matches
+        expect(await observation.doesChecksumMatch(0, dummyChecksum)).to.equal(true);
+        
+    })
+
+    it("should return false for non-matching checksum", async function () {
+        const {observation, badges, gardenExplorer, owner, otherAccount} = await deployGardenExplorerBadges();
+        // Mint an observation
+        await gardenExplorer.connect(otherAccount).safeMint({ value: ethers.parseEther('0.05') });
+        await observation.createObservation(otherAccount.address, dummyChecksum);
+    
+        ///pass in random checksum to check if it matches
+        expect(await observation.doesChecksumMatch(0, "0xeeeeaaaaa000062e72cb37c1f84f8d2ebadf8a666ed2f1e6ce8236a68e24a44d")).to.equal(false);
     })
 
     it("should return empty array if the user doesn't own any tokens", async function () {
@@ -117,4 +219,12 @@ import { expect } from 'chai'
         const ids = await observation.ownersTokens(owner.address);
         expect(await ids).to.be.deep.equal([]);
     })
+    
+    it("Should allow the owner to update the base uri", async function () {
+        const {observation, owner} = await deployGardenExplorerBadges();
+        const newBaseUri = "https://newbaseuri.blob.core.windows.net/metadata/";
+        await observation.connect(owner).setBaseUri(newBaseUri);
+        expect(await observation.getBaseUri()).to.be.equal(newBaseUri);
+    })
+
 })

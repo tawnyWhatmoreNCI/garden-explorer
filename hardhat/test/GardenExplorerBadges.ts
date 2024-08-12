@@ -1,7 +1,7 @@
 import hre, { ethers } from 'hardhat'
 import { expect } from 'chai'
 
-describe('GardenExplorer', function () {
+describe('Garden Explorer Badges', function () {
     // set up the contract and the accounts before each test
     async function deployGardenExplorerBadges() {
         const [owner, otherAccount] = await hre.ethers.getSigners()
@@ -57,5 +57,29 @@ describe('GardenExplorer', function () {
             ['Sprouting an Interest', 1n],
             ['Budding Naturalist', 2n],
         ])
+    })
+
+    it('Should update badge name', async function () {
+        const { gardenExplorerBadges, owner } =
+            await deployGardenExplorerBadges()
+        await gardenExplorerBadges.updateBadgeName(0, 'New Badge Name')
+        expect(await gardenExplorerBadges.badgeNames(0)).to.equal('New Badge Name')
+    })
+
+    it('Should update badge supply', async function () {
+        const { gardenExplorerBadges, owner } =
+            await deployGardenExplorerBadges()
+        await gardenExplorerBadges.updateSupply(1, 5000)
+        expect(await gardenExplorerBadges.balanceOf(gardenExplorerBadges.getAddress(), 1)).to.equal(10000)
+    })
+
+    it('Should not award the same badge twice', async function () {
+        const { gardenExplorerBadges, owner } =
+            await deployGardenExplorerBadges()
+        const [_, otherAccount] = await hre.ethers.getSigners()
+        await gardenExplorerBadges.awardBadge(otherAccount.address, 1)
+        await expect(
+            gardenExplorerBadges.awardBadge(otherAccount.address, 1)
+        ).to.be.revertedWith('Badge already awarded')
     })
 })

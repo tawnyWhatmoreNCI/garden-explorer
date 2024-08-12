@@ -49,7 +49,15 @@ describe("GardenExplorer", function () {
         expect(await gardenExplorer.ownerOf(0)).to.equal(owner.address);
     });
 
-    it("Should not mint and revert if thte user already has a token", async function () {
+    it("Should mint a token if exact required funds are sent", async function () {
+        const { gardenExplorer, owner } = await deployGardenExplorer();
+        const exactPrice = ethers.parseEther("0.05");
+        const mintTx = await gardenExplorer.safeMint({ value: exactPrice });
+        await mintTx.wait();
+        expect(await gardenExplorer.ownerOf(0)).to.equal(owner.address);
+    });
+
+    it("Should not mint and revert if the user already has a token", async function () {
         const { gardenExplorer } = await deployGardenExplorer();
         const mintPrice = ethers.parseEther("0.05");
         //minting the first token 
@@ -59,4 +67,6 @@ describe("GardenExplorer", function () {
 
         await expect(mintTx).to.be.revertedWith("You already own a garden");
     });
+
+    
 });

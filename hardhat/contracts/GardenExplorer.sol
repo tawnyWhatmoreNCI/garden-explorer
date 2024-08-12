@@ -59,5 +59,4 @@ contract GardenExplorer is ERC721, Ownable {
     function updateBaseUri(string memory newBaseURI) public onlyOwner { 
         baseURI = newBaseURI;
     }
-
 }
